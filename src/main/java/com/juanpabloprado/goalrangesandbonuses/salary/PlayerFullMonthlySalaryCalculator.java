@@ -28,6 +28,6 @@ public class PlayerFullMonthlySalaryCalculator {
         double bonus = calculatePercentage(average, monthlyBonus.getNumber().doubleValueExact()) * monthlyBonus.getNumber().doubleValueExact();
         System.out.println("Full Bonus: " + bonus);
 
-        return monthlySalary.add(Money.of(bonus, "MXN")).with(Monetary.getDefaultRounding());
+        return monthlySalary.add(Money.of(bonus, "MXN"));
     }
 }
