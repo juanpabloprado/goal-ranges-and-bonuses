@@ -1,8 +1,10 @@
 package com.juanpabloprado.goalrangesandbonuses.salary;
 
+import org.javamoney.moneta.Money;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
+import javax.money.Monetary;
+import javax.money.MonetaryAmount;
 import java.util.stream.DoubleStream;
 
 @Component
@@ -12,7 +14,7 @@ public class PlayerFullMonthlySalaryCalculator {
         return obtained * 100 / total;
     }
 
-    public BigDecimal calculateFullSalary(BigDecimal monthlySalary, BigDecimal monthlyBonus , int goalsScored, int minimum, int teamTotalGoals, int teamMinimum) {
+    public MonetaryAmount calculateFullSalary(MonetaryAmount monthlySalary, MonetaryAmount monthlyBonus , int goalsScored, int minimum, int teamTotalGoals, int teamMinimum) {
         double individualPercentage = calculatePercentage(goalsScored, minimum);
         System.out.println("Individual percentage: " + individualPercentage);
 
@@ -23,9 +25,9 @@ public class PlayerFullMonthlySalaryCalculator {
         System.out.println("Average: " + average);
         System.out.println("MonthlyBonus: " + monthlyBonus);
 
-        double bonus = calculatePercentage(average, monthlyBonus.doubleValue()) * monthlyBonus.doubleValue();
+        double bonus = calculatePercentage(average, monthlyBonus.getNumber().doubleValueExact()) * monthlyBonus.getNumber().doubleValueExact();
         System.out.println("Full Bonus: " + bonus);
 
-        return monthlySalary.add(BigDecimal.valueOf(bonus));
+        return monthlySalary.add(Money.of(bonus, "MXN")).with(Monetary.getDefaultRounding());
     }
 }

@@ -1,8 +1,11 @@
 package com.juanpabloprado.goalrangesandbonuses.salary;
 
 import com.juanpabloprado.goalrangesandbonuses.fc.Player;
+import org.javamoney.moneta.Money;
 import org.springframework.stereotype.Service;
 
+import javax.money.Monetary;
+import javax.money.MonetaryAmount;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.Supplier;
@@ -45,9 +48,11 @@ public class PlayersFullSalaryServiceImpl implements PlayersFullSalaryService {
 
     private Player calculateFullSalary(Player player, int teamGoalSum) {
         int goalsPerMonth = Level.valueOf(player.getNivel().toUpperCase()).getGoalsPerMonth();
-        BigDecimal fullSalary = calculator.calculateFullSalary(BigDecimal.valueOf(player.getSueldo()), BigDecimal.valueOf(player.getBono()), player.getGoles(), goalsPerMonth, teamGoalSum, Level.getMinimumRequired());
+        MonetaryAmount salary = Money.of(player.getSueldo(), "MXN");
+        MonetaryAmount bonus = Money.of(player.getBono(), "MXN");
+        MonetaryAmount fullSalary = calculator.calculateFullSalary(salary, bonus, player.getGoles(), goalsPerMonth, teamGoalSum, Level.getMinimumRequired());
         Player p = new Player(player.getNombre(), player.getNivel(), player.getGoles(), player.getSueldo(), player.getBono(), player.getEquipo());
-        p.setSueldoCompleto(fullSalary.intValue());
+        p.setSueldoCompleto(fullSalary.getNumber().intValue());
         return p;
     }
 }
