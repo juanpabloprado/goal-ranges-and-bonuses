@@ -3,6 +3,7 @@ package com.juanpabloprado.goalrangesandbonuses.web;
 import com.juanpabloprado.goalrangesandbonuses.fc.Player;
 import com.juanpabloprado.goalrangesandbonuses.salary.PlayersFullSalaryService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,7 @@ public class PlayersFullSalaryController {
     }
 
     @PostMapping("/salaries")
-    public List<Player> calculateSalaries(List<Player> players) {
+    public List<Player> calculateSalaries(@RequestBody List<Player> players) {
         return playersFullSalaryService.calculateFullSalaries(players);
     }
 

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.juanpabloprado.goalrangesandbonuses.salary.Level;
@@ -21,19 +20,12 @@ import com.juanpabloprado.goalrangesandbonuses.salary.Level;
 })
 public class Player {
 
-    @JsonProperty("nombre")
     private String nombre;
-    @JsonProperty("nivel")
     private Level nivel;
-    @JsonProperty("goles")
     private int goles;
-    @JsonProperty("sueldo")
     private int sueldo;
-    @JsonProperty("bono")
     private int bono;
-    @JsonProperty("sueldo_completo")
     private Integer sueldoCompleto;
-    @JsonProperty("equipo")
     private Player.Equipo equipo;
 
     public Player() {

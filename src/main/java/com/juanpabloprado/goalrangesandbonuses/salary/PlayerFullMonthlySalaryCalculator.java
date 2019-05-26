@@ -3,7 +3,6 @@ package com.juanpabloprado.goalrangesandbonuses.salary;
 import org.javamoney.moneta.Money;
 import org.springframework.stereotype.Component;
 
-import javax.money.Monetary;
 import javax.money.MonetaryAmount;
 import java.util.stream.DoubleStream;
 
