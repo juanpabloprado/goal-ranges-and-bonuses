@@ -36,6 +36,18 @@ public class Player {
     @JsonProperty("equipo")
     private Player.Equipo equipo;
 
+    public Player() {
+    }
+
+    public Player(String nombre, String nivel, int goles, int sueldo, int bono, Equipo equipo) {
+        this.nombre = nombre;
+        this.nivel = Level.valueOf(nivel.toUpperCase());
+        this.goles = goles;
+        this.sueldo = sueldo;
+        this.bono = bono;
+        this.equipo = equipo;
+    }
+
     public String getNombre() {
         return nombre;
     }

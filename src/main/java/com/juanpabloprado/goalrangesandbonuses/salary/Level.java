@@ -1,6 +1,8 @@
 package com.juanpabloprado.goalrangesandbonuses.salary;
 
 
+import java.util.Arrays;
+
 public enum Level {
     A("A", 5),
     B("B", 10),
@@ -22,5 +24,9 @@ public enum Level {
     @Override
     public String toString() {
         return displayName;
+    }
+
+    public static int getMinimumRequired() {
+        return Arrays.stream(Level.values()).mapToInt(Level::getGoalsPerMonth).sum();
     }
 }
