@@ -49,6 +49,19 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>1.2.0</version>
+                <configuration>
+                    <from>
+                        <image>openjdk:11.0.2-jre-slim-stretch</image>
+                    </from>
+                    <to>
+                        <image>docker.io/juanpablo/goal-ranges-and-bonuses:jib</image>
+                    </to>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
