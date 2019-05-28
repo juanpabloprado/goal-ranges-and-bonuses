@@ -26,11 +26,16 @@ public class PlayersFullSalaryServiceImpl implements PlayersFullSalaryService {
         Supplier<Stream<Player>> redPlayersStreamSupplier = () -> players.stream().filter(p -> p.getEquipo() == Player.Equipo.ROJO);
 
         int blueGoalSum = bluePlayersStreamSupplier.get().mapToInt(Player::getGoles).sum();
+
+        int blueGoalMinPerMonth = bluePlayersStreamSupplier.get().mapToInt(p -> Level.valueOf(p.getNivel().toUpperCase()).getGoalsPerMonth()).sum();
+
         int redGoalSum = redPlayersStreamSupplier.get().mapToInt(Player::getGoles).sum();
 
-        Stream<Player> bluePlayersStream = bluePlayersStreamSupplier.get().map(player -> calculateFullSalary(player, blueGoalSum));
+        int redGoalMinPerMonth = redPlayersStreamSupplier.get().mapToInt(p -> Level.valueOf(p.getNivel().toUpperCase()).getGoalsPerMonth()).sum();
 
-        Stream<Player> redPlayersStream = redPlayersStreamSupplier.get().map(player -> calculateFullSalary(player, redGoalSum));
+        Stream<Player> bluePlayersStream = bluePlayersStreamSupplier.get().map(player -> calculateFullSalary(player, blueGoalSum, blueGoalMinPerMonth));
+
+        Stream<Player> redPlayersStream = redPlayersStreamSupplier.get().map(player -> calculateFullSalary(player, redGoalSum, redGoalMinPerMonth));
 
         Stream<Player> resultingStream = Stream.concat(bluePlayersStream, redPlayersStream);
 
@@ -39,16 +44,15 @@ public class PlayersFullSalaryServiceImpl implements PlayersFullSalaryService {
 
         System.out.println("Blue Goal sum: " + blueGoalSum);
         System.out.println("Red Goal sum: " + redGoalSum);
-        System.out.println("Level sum: " + Level.getMinimumRequired());
 
         return playersRes;
     }
 
-    private Player calculateFullSalary(Player player, int teamGoalSum) {
+    private Player calculateFullSalary(Player player, int teamGoalSum, int teamGoalMinPerMonth) {
         int goalsPerMonth = Level.valueOf(player.getNivel().toUpperCase()).getGoalsPerMonth();
         MonetaryAmount salary = Money.of(player.getSueldo(), "MXN");
         MonetaryAmount bonus = Money.of(player.getBono(), "MXN");
-        MonetaryAmount fullSalary = calculator.calculateFullSalary(salary, bonus, player.getGoles(), goalsPerMonth, teamGoalSum, Level.getMinimumRequired());
+        MonetaryAmount fullSalary = calculator.calculateFullSalary(salary, bonus, player.getGoles(), goalsPerMonth, teamGoalSum, teamGoalMinPerMonth);
         Player p = new Player(player.getNombre(), player.getNivel(), player.getGoles(), player.getSueldo(), player.getBono(), player.getEquipo());
         p.setSueldoCompleto(fullSalary.getNumber().intValue());
         return p;

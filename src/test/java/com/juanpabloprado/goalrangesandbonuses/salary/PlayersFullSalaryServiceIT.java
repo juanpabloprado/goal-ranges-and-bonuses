@@ -58,5 +58,10 @@ public class PlayersFullSalaryServiceIT {
         List<Player> playersWithFullSalaries = playersFullSalaryService.calculateFullSalaries(players);
 
         playersWithFullSalaries.forEach(System.out::println);
+
+        assertEquals(144700, playersWithFullSalaries.get(0).getSueldoCompleto(), 0.2); // EL Cuauh
+        assertEquals(20_000 + 14_400, playersWithFullSalaries.get(1).getSueldoCompleto(), 0.2); // Cosme Fulanito
+        assertEquals(67833, playersWithFullSalaries.get(2).getSueldoCompleto(), 0.2); // Juan Perez
+        assertEquals(42450, playersWithFullSalaries.get(3).getSueldoCompleto(), 0.2); // El Rulo
     }
 }
