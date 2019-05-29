@@ -26,7 +26,4 @@ public enum Level {
         return displayName;
     }
 
-    public static int getMinimumRequired() {
-        return Arrays.stream(Level.values()).mapToInt(Level::getGoalsPerMonth).sum();
-    }
 }
